@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Tells the popup which product page it is on, so it can count the view and show "viewed today". -->
+    <template id="product_sales_proof" inherit_id="website_sale.product" name="Sales popup: product marker">
+        <xpath expr="//div[@id='o_wsale_product_cta_section']" position="after">
+            <span class="d-none mrj-sp-product" t-att-data-id="product.id"/>
+        </xpath>
+    </template>
+</odoo>

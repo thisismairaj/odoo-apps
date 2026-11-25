@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_config_settings_view_form" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.mrj.sales.proof</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="website_sale.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <block id="website_payment_block" position="inside">
+                <setting id="mrj_sales_proof_setting" string="Honest sales popup"
+                         help="A small card in the corner showing real recent orders, real views today and your trust messages. Nothing invented.">
+                    <field name="mrj_sp_enabled"/>
+                    <div invisible="not mrj_sp_enabled">
+                        <div class="row mt-2">
+                            <label for="mrj_sp_min_orders" class="col-lg-5 o_light_label"/>
+                            <field name="mrj_sp_min_orders" class="col-lg-3"/>
+                        </div>
+                        <div class="row mt-1">
+                            <label for="mrj_sp_days" class="col-lg-5 o_light_label"/>
+                            <field name="mrj_sp_days" class="col-lg-3"/>
+                        </div>
+                        <div class="row mt-1">
+                            <label for="mrj_sp_min_views" class="col-lg-5 o_light_label"/>
+                            <field name="mrj_sp_min_views" class="col-lg-3"/>
+                        </div>
+                        <div class="row mt-1">
+                            <label for="mrj_sp_max_cards" class="col-lg-5 o_light_label"/>
+                            <field name="mrj_sp_max_cards" class="col-lg-3"/>
+                        </div>
+                        <div class="mt-1"><field name="mrj_sp_show_city"/><label for="mrj_sp_show_city"/></div>
+                        <div class="row mt-2">
+                            <label for="mrj_sp_trust" class="col-lg-12 o_light_label"/>
+                            <field name="mrj_sp_trust" class="col-lg-12 w-100" widget="text"
+                                   placeholder="Free returns within 14 days&#10;Cash on delivery available"/>
+                        </div>
+                        <div class="text-muted small mt-1">
+                            Order cards stay off until the shop has the minimum number of confirmed website orders in the period.
+                            Only the buyer's first name (and city) is shown. Tick "Hide from sales popup" on any order to keep it out.
+                        </div>
+                    </div>
+                </setting>
+            </block>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,20 @@
+.mrj-sp {
+    position: fixed; left: 16px; bottom: 16px; z-index: 1050;
+    display: flex; align-items: center; gap: 12px;
+    max-width: min(360px, calc(100vw - 32px)); padding: 12px 36px 12px 12px;
+    background: #fff; color: #1f2328; border: 1px solid rgba(0, 0, 0, .1); border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, .12); font-size: 14px; line-height: 1.35;
+    opacity: 0; transform: translateY(12px); transition: opacity .35s ease, transform .35s ease;
+}
+.mrj-sp.is-on { opacity: 1; transform: none; }
+.mrj-sp[hidden] { display: none; }
+.mrj-sp-img { width: 48px; height: 48px; flex: 0 0 48px; border-radius: 8px; object-fit: cover; background: #f3f4f6; }
+.mrj-sp-icon { width: 36px; height: 36px; flex: 0 0 36px; border-radius: 50%; display: grid; place-items: center;
+    background: #e8f5ee; color: #1a7f4b; }
+.mrj-sp-body a { font-weight: 600; color: inherit; text-decoration: underline; text-underline-offset: 2px; }
+.mrj-sp-meta { display: block; margin-top: 2px; font-size: 12px; color: #6b7280; }
+.mrj-sp-close { position: absolute; top: 6px; right: 6px; width: 24px; height: 24px; border: 0; background: none;
+    color: #6b7280; font-size: 18px; line-height: 1; cursor: pointer; border-radius: 6px; }
+.mrj-sp-close:hover, .mrj-sp-close:focus-visible { background: #f3f4f6; color: #1f2328; }
+@media (max-width: 575px) { .mrj-sp { left: 8px; right: 8px; bottom: 72px; max-width: none; } }
+@media (prefers-reduced-motion: reduce) { .mrj-sp { transition: none; transform: none; } }
