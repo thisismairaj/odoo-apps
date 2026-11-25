@@ -1,6 +1,6 @@
 # Odoo apps by Muhammad Mairaj
 
-Small Odoo modules, one folder per module. The branch name is the Odoo version (`20.0`).
+Small Odoo modules, one folder per module. The branch name is the Odoo version (`18.0`, `19.0`, `20.0`).
 
 | Module | What it does |
 |---|---|

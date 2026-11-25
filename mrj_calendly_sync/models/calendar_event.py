@@ -5,6 +5,8 @@ from markupsafe import Markup, escape
 
 from odoo import api, fields, models
 
+from ._mrj_compat import icp_int, icp_str
+
 from .calendly_client import CalendlyClient, CalendlyError
 
 _logger = logging.getLogger(__name__)
@@ -36,11 +38,11 @@ class CalendarEvent(models.Model):
     def _mrj_calendly_sync(self, client=None):
         """Fetch Calendly bookings and create or update calendar events. Returns a short result text."""
         icp = self.env["ir.config_parameter"].sudo()
-        token = icp.get_str(PARAM + "token")
+        token = icp_str(icp, PARAM + "token")
         if not token and client is None:
             return self._mrj_calendly_result("Not synced: no Calendly token in Settings.")
-        days = icp.get_int(PARAM + "days_back", 30) or 30
-        owner = self.env["res.users"].sudo().browse(icp.get_int(PARAM + "user_id")).exists() or self.env.ref("base.user_admin")
+        days = icp_int(icp, PARAM + "days_back", 30) or 30
+        owner = self.env["res.users"].sudo().browse(icp_int(icp, PARAM + "user_id")).exists() or self.env.ref("base.user_admin")
         client = client or CalendlyClient(token)
         created = updated = moved = archived = 0
         try:
@@ -93,7 +95,7 @@ class CalendarEvent(models.Model):
     def _mrj_calendly_result(self, text):
         stamp = fields.Datetime.now().strftime("%Y-%m-%d %H:%M UTC")
         result = f"{stamp}: {text}"
-        self.env["ir.config_parameter"].sudo().set_str(PARAM + "last_result", result)
+        self.env["ir.config_parameter"].sudo().set_param(PARAM + "last_result", result)
         _logger.info("Calendly sync %s", result)
         return result
 

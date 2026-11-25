@@ -9,7 +9,7 @@ BOTS = re.compile(r"bot|crawl|spider|slurp|headless|preview|fetch|monitor|lighth
 class SalesProofController(http.Controller):
     @http.route("/mrj_sales_proof/cards", type="jsonrpc", auth="public", website=True, methods=["POST"])
     def cards(self, product_template_id=None, **kw):
-        website = request.env.website
+        website = request.website
         template = None
         if product_template_id:
             template = request.env["product.template"].sudo().browse(int(product_template_id)).exists()

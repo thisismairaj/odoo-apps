@@ -1,4 +1,6 @@
-from odoo import fields, models
+from odoo import api, fields, models
+
+from ._mrj_compat import bool_get_values, bool_set_values
 
 DEFAULT_PROMPT = (
     'Read {url} ("{product}" from {shop}). Tell me in plain words what this product is, who it suits, '
@@ -19,9 +21,20 @@ class ResConfigSettings(models.TransientModel):
         default=DEFAULT_PROMPT,
         help="Placeholders: {product}, {url}, {shop}.",
     )
-    mrj_ask_ai_chatgpt = fields.Boolean("ChatGPT", config_parameter="mrj_website_ask_ai.chatgpt", default=True)
-    mrj_ask_ai_perplexity = fields.Boolean("Perplexity", config_parameter="mrj_website_ask_ai.perplexity", default=True)
-    mrj_ask_ai_claude = fields.Boolean("Claude", config_parameter="mrj_website_ask_ai.claude", default=True)
-    mrj_ask_ai_gemini = fields.Boolean("Gemini", config_parameter="mrj_website_ask_ai.gemini", default=True)
-    mrj_ask_ai_grok = fields.Boolean("Grok", config_parameter="mrj_website_ask_ai.grok", default=True)
-    mrj_ask_ai_copy = fields.Boolean("Copy for any AI", config_parameter="mrj_website_ask_ai.copy", default=True)
+    mrj_ask_ai_chatgpt = fields.Boolean("ChatGPT", default=True)
+    mrj_ask_ai_perplexity = fields.Boolean("Perplexity", default=True)
+    mrj_ask_ai_claude = fields.Boolean("Claude", default=True)
+    mrj_ask_ai_gemini = fields.Boolean("Gemini", default=True)
+    mrj_ask_ai_grok = fields.Boolean("Grok", default=True)
+    mrj_ask_ai_copy = fields.Boolean("Copy for any AI", default=True)
+
+    _MRJ_BOOLS = {"mrj_ask_ai_%s" % k: ("mrj_website_ask_ai.%s" % k, True)
+                  for k in ("chatgpt", "perplexity", "claude", "gemini", "grok", "copy")}
+
+    @api.model
+    def get_values(self):
+        return bool_get_values(self, super().get_values(), self._MRJ_BOOLS)
+
+    def set_values(self):
+        super().set_values()
+        bool_set_values(self, self._MRJ_BOOLS)

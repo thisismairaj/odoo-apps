@@ -106,7 +106,7 @@ class TestCalendlySync(TransactionCase):
         self.assertFalse(mails, "Calendly already emails invitees; Odoo must not")
 
     def test_no_token(self):
-        self.env["ir.config_parameter"].sudo().set_str("mrj_calendly_sync.token", False)
+        self.env["ir.config_parameter"].sudo().set_param("mrj_calendly_sync.token", False)
         self.assertIn("no Calendly token", self.env["calendar.event"]._mrj_calendly_sync())
 
     def test_error_is_reported(self):
@@ -115,4 +115,4 @@ class TestCalendlySync(TransactionCase):
                 raise CalendlyError("Calendly refused the token (401).")
         result = self.env["calendar.event"]._mrj_calendly_sync(client=Broken([], {}))
         self.assertIn("Failed: Calendly refused the token", result)
-        self.assertIn("Failed", self.env["ir.config_parameter"].sudo().get_str("mrj_calendly_sync.last_result"))
+        self.assertIn("Failed", self.env["ir.config_parameter"].sudo().get_param("mrj_calendly_sync.last_result"))

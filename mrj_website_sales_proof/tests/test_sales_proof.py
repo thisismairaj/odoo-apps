@@ -9,9 +9,9 @@ class TestSalesProof(TransactionCase):
         super().setUp()
         self.website = self.env["website"].create({"name": "Popup test shop"})
         self.icp = self.env["ir.config_parameter"].sudo()
-        self.icp.set_str(P + "min_orders", "3")
-        self.icp.set_str(P + "min_views", "2")
-        self.icp.set_str(P + "trust", "Free returns within 14 days\n\n  Cash on delivery  ")
+        self.icp.set_param(P + "min_orders", "3")
+        self.icp.set_param(P + "min_views", "2")
+        self.icp.set_param(P + "trust", "Free returns within 14 days\n\n  Cash on delivery  ")
         self.tmpl = self.env["product.template"].create({
             "name": "Linen Shirt", "list_price": 30, "is_published": True, "sale_ok": True, "type": "consu",
         })
@@ -49,7 +49,7 @@ class TestSalesProof(TransactionCase):
     def test_city_can_be_turned_off(self):
         for _i in range(3):
             self._order()
-        self.icp.set_str(P + "show_city", "False")
+        self.icp.set_param(P + "show_city", "0")
         self.assertEqual(self.website._mrj_sp_order_cards()[0]["text"], "Ayesha ordered")
 
     def test_company_buyer_is_not_named(self):
@@ -80,7 +80,7 @@ class TestSalesProof(TransactionCase):
         data = self.website._mrj_sp_cards()
         self.assertEqual([c["text"] for c in data["cards"]], ["Free returns within 14 days", "Cash on delivery"])
         self.assertEqual(data["max"], 3)
-        self.icp.set_str(P + "enabled", "False")
+        self.icp.set_param(P + "enabled", "0")
         self.assertEqual(self.website._mrj_sp_cards(), {"cards": [], "max": 0})
 
 
@@ -94,3 +94,16 @@ class TestSalesProofRoute(HttpCase):
         self.assertEqual(self.env["mrj.sales.proof.view"]._mrj_views_today(tmpl), 1)
         self.make_jsonrpc_request(url, {"product_template_id": tmpl.id}, headers={"User-Agent": "Googlebot/2.1"})
         self.assertEqual(self.env["mrj.sales.proof.view"]._mrj_views_today(tmpl), 1)
+
+
+@tagged("post_install", "-at_install")
+class TestSalesProofSettings(TransactionCase):
+    def test_unticked_boxes_stay_unticked(self):
+        """Odoo deletes a False config parameter, so a box on by default must be stored as "0"."""
+        self.env["res.config.settings"].create({"mrj_sp_enabled": False, "mrj_sp_show_city": False}).execute()
+        fresh = self.env["res.config.settings"].create({})
+        self.assertFalse(fresh.mrj_sp_enabled)
+        self.assertFalse(fresh.mrj_sp_show_city)
+        self.assertEqual(self.env["website"].search([], limit=1)._mrj_sp_cards(), {"cards": [], "max": 0})
+        self.env["res.config.settings"].create({"mrj_sp_enabled": True}).execute()
+        self.assertTrue(self.env["res.config.settings"].create({}).mrj_sp_enabled)

@@ -1,2 +1,0 @@
-id,name,model_id,group_id/id,operation,domain
-access_mrj_sales_proof_view_admin,mrj.sales.proof.view admin,mrj.sales.proof.view,base.group_system,crud,

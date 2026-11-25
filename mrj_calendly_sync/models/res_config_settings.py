@@ -1,5 +1,7 @@
 from odoo import fields, models
 
+from ._mrj_compat import icp_str
+
 
 class ResConfigSettings(models.TransientModel):
     _inherit = "res.config.settings"
@@ -17,7 +19,7 @@ class ResConfigSettings(models.TransientModel):
     mrj_calendly_last_result = fields.Char("Last sync", compute="_compute_mrj_calendly_last_result")
 
     def _compute_mrj_calendly_last_result(self):
-        value = self.env["ir.config_parameter"].sudo().get_str("mrj_calendly_sync.last_result") or "Never"
+        value = icp_str(self.env["ir.config_parameter"].sudo(), "mrj_calendly_sync.last_result") or "Never"
         for rec in self:
             rec.mrj_calendly_last_result = value
 
