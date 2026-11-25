@@ -2,7 +2,7 @@
     "name": "Calendly Bookings to Calendar",
     "summary": "Bring your Calendly bookings into the Odoo Calendar: invitees as contacts, meeting link, "
     "their answers, and cancellations. Works with Calendly's free plan (no webhooks needed).",
-    "version": "20.0.1.0.0",
+    "version": "20.0.1.0.1",
     "category": "Productivity/Calendar",
     "author": "Muhammad Mairaj",
     "website": "https://thisismairaj.com",

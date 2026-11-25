@@ -42,29 +42,53 @@ class CalendarEvent(models.Model):
         days = icp.get_int(PARAM + "days_back", 30) or 30
         owner = self.env["res.users"].sudo().browse(icp.get_int(PARAM + "user_id")).exists() or self.env.ref("base.user_admin")
         client = client or CalendlyClient(token)
-        created = updated = archived = 0
+        created = updated = moved = archived = 0
         try:
             me = client.me()
             since = (fields.Datetime.now() - timedelta(days=days)).strftime("%Y-%m-%dT%H:%M:%S.000000Z")
             Event = self.sudo().with_context(active_test=False, **QUIET)
-            for ev in client.scheduled_events(me["uri"], since):
-                invitees = [i for i in client.invitees(ev["uri"]) if i.get("status") != "canceled"] if ev.get("status") != "canceled" else []
-                vals = self._mrj_calendly_vals(ev, invitees, owner)
+            events = list(client.scheduled_events(me["uri"], since))
+            invitees_of = {ev["uri"]: client.invitees(ev["uri"]) for ev in events}
+            # Calendly reschedules by cancelling the booking and creating a new one. The cancelled
+            # invitee points to its replacement, so the same Odoo event can be moved instead.
+            replaced_by = {}
+            for ev in events:
+                if ev.get("status") == "canceled":
+                    for inv in invitees_of[ev["uri"]]:
+                        if inv.get("rescheduled") and inv.get("new_invitee"):
+                            replaced_by[ev["uri"]] = inv["new_invitee"].split("/invitees/")[0]
+            replaces = {new: old for old, new in replaced_by.items()}
+            active_uris = {ev["uri"] for ev in events if ev.get("status") != "canceled"}
+
+            for ev in events:
                 existing = Event.search([("mrj_calendly_uri", "=", ev["uri"])], limit=1)
                 if ev.get("status") == "canceled":
+                    if replaced_by.get(ev["uri"]) in active_uris:
+                        continue  # moved to its replacement below
                     if existing and existing.active:
                         existing.write({"active": False})
                         archived += 1
                     continue
+                invitees = [i for i in invitees_of[ev["uri"]] if i.get("status") != "canceled"]
+                vals = self._mrj_calendly_vals(ev, invitees, owner)
+                update_vals = {k: v for k, v in vals.items() if k != "notes"}  # keep notes users added in Odoo
+                if not existing and ev["uri"] in replaces:
+                    existing = Event.search([("mrj_calendly_uri", "=", replaces[ev["uri"]])], limit=1)
+                    if existing:
+                        existing.write(update_vals)  # takes the new Calendly id, time and link
+                        moved += 1
+                        continue
                 if existing:
-                    existing.write(vals)
+                    existing.write(update_vals)
                     updated += 1
                 else:
                     Event.create(vals)
                     created += 1
         except CalendlyError as exc:
             return self._mrj_calendly_result(f"Failed: {exc}")
-        return self._mrj_calendly_result(f"OK: {created} new, {updated} updated, {archived} cancelled.")
+        return self._mrj_calendly_result(
+            f"OK: {created} new, {updated} updated, {moved} rescheduled, {archived} cancelled."
+        )
 
     def _mrj_calendly_result(self, text):
         stamp = fields.Datetime.now().strftime("%Y-%m-%d %H:%M UTC")

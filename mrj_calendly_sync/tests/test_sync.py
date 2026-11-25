@@ -49,7 +49,7 @@ class TestCalendlySync(TransactionCase):
 
     def test_create_update_cancel(self):
         result = self.env["calendar.event"]._mrj_calendly_sync(client=FakeCalendly([self.event], self.invitees))
-        self.assertIn("OK: 1 new, 0 updated, 0 cancelled", result)
+        self.assertIn("OK: 1 new, 0 updated, 0 rescheduled, 0 cancelled", result)
         ev = self.Event.search([("mrj_calendly_uri", "=", self.ev_uri)])
         self.assertEqual(len(ev), 1)
         self.assertEqual(ev.name, "30 Minute Meeting: Sara Khan")
@@ -74,6 +74,29 @@ class TestCalendlySync(TransactionCase):
         result = self.env["calendar.event"]._mrj_calendly_sync(client=FakeCalendly([cancelled], self.invitees))
         self.assertIn("1 cancelled", result)
         self.assertFalse(ev.active)
+
+    def test_reschedule_moves_the_same_event(self):
+        """Calendly reschedules by cancelling the booking and creating a new one (seen on a real account)."""
+        self.env["calendar.event"]._mrj_calendly_sync(client=FakeCalendly([self.event], self.invitees))
+        ev = self.Event.search([("mrj_calendly_uri", "=", self.ev_uri)])
+        ev.notes = "<p>Bring the contract.</p>"  # something a user added in Odoo
+        new_uri = "https://api.calendly.com/scheduled_events/BBB"
+        old = dict(self.event, status="canceled")
+        new = dict(self.event, uri=new_uri, start_time=iso(self.start + timedelta(days=1)),
+                   end_time=iso(self.start + timedelta(days=1, minutes=30)))
+        old_inv = [dict(self.invitees[self.ev_uri][0], status="canceled", rescheduled=True,
+                        new_invitee=new_uri + "/invitees/X1")]
+        fake = FakeCalendly([new, old], {self.ev_uri: old_inv, new_uri: self.invitees[self.ev_uri]})
+        result = self.env["calendar.event"]._mrj_calendly_sync(client=fake)
+        self.assertIn("0 new, 0 updated, 1 rescheduled, 0 cancelled", result)
+        self.assertTrue(ev.active)
+        self.assertEqual(ev.mrj_calendly_uri, new_uri)
+        self.assertEqual(ev.start, self.start + timedelta(days=1))
+        self.assertIn("Bring the contract.", str(ev.notes), "notes added in Odoo must survive")
+        self.assertEqual(self.Event.search_count([("name", "=", ev.name)]), 1, "no second event")
+        # A later sync sees the new booking as an ordinary update.
+        self.assertIn("0 new, 1 updated, 0 rescheduled, 0 cancelled",
+                      self.env["calendar.event"]._mrj_calendly_sync(client=fake))
 
     def test_no_invitation_emails(self):
         before = self.env["mail.mail"].search_count([])
