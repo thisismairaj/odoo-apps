@@ -1,0 +1,12 @@
+.mrj-askai { position: relative; }
+.mrj-askai-btn { display: inline-flex; align-items: center; gap: .45rem; padding: .5rem .95rem; border: 1px solid currentColor; border-radius: 999px; background: transparent; color: inherit; font: inherit; font-size: .9rem; cursor: pointer; }
+.mrj-askai-btn:hover, .mrj-askai-btn[aria-expanded="true"] { background: rgba(0, 0, 0, .05); }
+/* The menu opens in the page flow (not floating), because Odoo's product column clips overflowing content. */
+.mrj-askai-menu { position: static; margin-top: .4rem; max-width: 18rem; padding: .35rem; border: 1px solid rgba(0, 0, 0, .12); border-radius: .6rem; background: #fff; box-shadow: 0 8px 24px rgba(0, 0, 0, .12); }
+.mrj-askai-menu[hidden] { display: none; }
+.mrj-askai-item { display: block; width: 100%; padding: .55rem .7rem; border: 0; border-radius: .4rem; background: transparent; color: #222; font: inherit; font-size: .9rem; text-align: left; cursor: pointer; }
+.mrj-askai-item:hover, .mrj-askai-item:focus-visible { background: rgba(0, 0, 0, .06); }
+.mrj-askai-copy { margin-top: .25rem; border-top: 1px solid rgba(0, 0, 0, .08); border-radius: 0 0 .4rem .4rem; }
+.mrj-askai-toast { position: fixed; z-index: 1060; left: 50%; bottom: 1.5rem; transform: translateX(-50%); max-width: 90vw; padding: .6rem 1rem; border-radius: .5rem; background: #222; color: #fff; font-size: .875rem; opacity: 0; pointer-events: none; transition: opacity .2s; }
+.mrj-askai-toast.is-on { opacity: 1; }
+@media print { .mrj-askai { display: none; } }

@@ -1,0 +1,5 @@
+NEXT.md
+.claude-brain/
+__pycache__/
+*.pyc
+.scaffold.md

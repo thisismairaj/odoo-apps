@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_config_settings_view_form" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.mrj.ask.ai</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="website_sale.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <block id="website_payment_block" position="inside">
+                <setting id="mrj_ask_ai_setting" string="Ask AI about this product"
+                         help="A button on product pages that opens the shopper's own AI assistant with the product link and a question filled in.">
+                    <div class="row mt-2">
+                        <label for="mrj_ask_ai_label" class="col-lg-3 o_light_label"/>
+                        <field name="mrj_ask_ai_label" class="col-lg-9 w-100"/>
+                    </div>
+                    <div class="row mt-2">
+                        <label for="mrj_ask_ai_prompt" class="col-lg-3 o_light_label"/>
+                        <field name="mrj_ask_ai_prompt" class="col-lg-9 w-100" widget="text"/>
+                    </div>
+                    <div class="text-muted small mt-1">
+                        Placeholders: {product}, {url}, {shop}. ChatGPT and Perplexity open with the question filled in.
+                        For Claude, Gemini and Grok it is also copied, so shoppers can paste it.
+                    </div>
+                    <div class="mt-2 d-flex flex-wrap gap-3">
+                        <span><field name="mrj_ask_ai_chatgpt"/><label for="mrj_ask_ai_chatgpt"/></span>
+                        <span><field name="mrj_ask_ai_perplexity"/><label for="mrj_ask_ai_perplexity"/></span>
+                        <span><field name="mrj_ask_ai_claude"/><label for="mrj_ask_ai_claude"/></span>
+                        <span><field name="mrj_ask_ai_gemini"/><label for="mrj_ask_ai_gemini"/></span>
+                        <span><field name="mrj_ask_ai_grok"/><label for="mrj_ask_ai_grok"/></span>
+                        <span><field name="mrj_ask_ai_copy"/><label for="mrj_ask_ai_copy"/></span>
+                    </div>
+                </setting>
+            </block>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="product_ask_ai" inherit_id="website_sale.product" name="Ask AI About This Product">
+        <xpath expr="//div[@id='o_wsale_product_cta_section']" position="after">
+            <t t-set="mrj_ask" t-value="product._mrj_ask_ai_data(website)"/>
+            <div t-if="mrj_ask" class="mrj-askai mb-4"
+                 t-att-data-prompt="mrj_ask['prompt']"
+                 t-att-data-copy="mrj_ask['copy']"
+                 t-att-data-msg-copied="mrj_ask['msg_copied']"
+                 t-att-data-msg-copied-all="mrj_ask['msg_copied_all']">
+                <button type="button" class="mrj-askai-btn" aria-expanded="false" aria-controls="mrj-askai-menu">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/></svg>
+                    <span t-out="mrj_ask['label']"/>
+                </button>
+                <div class="mrj-askai-menu" id="mrj-askai-menu" hidden="hidden">
+                    <t t-foreach="mrj_ask['items']" t-as="item">
+                        <button type="button"
+                                t-attf-class="mrj-askai-item mrj-askai-{{ item['key'] }}"
+                                t-att-data-kind="item['key']"
+                                t-att-data-url="item['url']"
+                                t-att-data-copy-first="'1' if item['copy_first'] else '0'"
+                                t-out="item['label']"/>
+                    </t>
+                </div>
+                <div class="mrj-askai-toast" role="status" aria-live="polite"/>
+            </div>
+        </xpath>
+    </template>
+</odoo>
