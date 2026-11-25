@@ -56,8 +56,8 @@ class TestCalendlySync(TransactionCase):
         self.assertEqual(ev.start, self.start)
         self.assertEqual(ev.videocall_location, "https://meet.example.com/abc")
         self.assertIn("sara@example.com", ev.partner_ids.mapped("email"))
-        self.assertIn("&lt;b&gt;please&lt;/b&gt;", str(ev.notes), "answers must be escaped")
-        self.assertIn("<li><b>What do you need?</b>", str(ev.notes))
+        self.assertIn("&lt;b&gt;please&lt;/b&gt;", str(ev.description), "answers must be escaped")
+        self.assertIn("<li><b>What do you need?</b>", str(ev.description))
 
         # Running again updates, never duplicates.
         moved = dict(self.event, start_time=iso(self.start + timedelta(hours=1)), end_time=iso(self.start + timedelta(hours=2)))
@@ -79,7 +79,7 @@ class TestCalendlySync(TransactionCase):
         """Calendly reschedules by cancelling the booking and creating a new one (seen on a real account)."""
         self.env["calendar.event"]._mrj_calendly_sync(client=FakeCalendly([self.event], self.invitees))
         ev = self.Event.search([("mrj_calendly_uri", "=", self.ev_uri)])
-        ev.notes = "<p>Bring the contract.</p>"  # something a user added in Odoo
+        ev.description = "<p>Bring the contract.</p>"  # something a user added in Odoo
         new_uri = "https://api.calendly.com/scheduled_events/BBB"
         old = dict(self.event, status="canceled")
         new = dict(self.event, uri=new_uri, start_time=iso(self.start + timedelta(days=1)),
@@ -92,7 +92,7 @@ class TestCalendlySync(TransactionCase):
         self.assertTrue(ev.active)
         self.assertEqual(ev.mrj_calendly_uri, new_uri)
         self.assertEqual(ev.start, self.start + timedelta(days=1))
-        self.assertIn("Bring the contract.", str(ev.notes), "notes added in Odoo must survive")
+        self.assertIn("Bring the contract.", str(ev.description), "notes added in Odoo must survive")
         self.assertEqual(self.Event.search_count([("name", "=", ev.name)]), 1, "no second event")
         # A later sync sees the new booking as an ordinary update.
         self.assertIn("0 new, 1 updated, 0 rescheduled, 0 cancelled",
@@ -106,7 +106,7 @@ class TestCalendlySync(TransactionCase):
         self.assertFalse(mails, "Calendly already emails invitees; Odoo must not")
 
     def test_no_token(self):
-        self.env["ir.config_parameter"].sudo().set_str("mrj_calendly_sync.token", False)
+        self.env["ir.config_parameter"].sudo().set_param("mrj_calendly_sync.token", False)
         self.assertIn("no Calendly token", self.env["calendar.event"]._mrj_calendly_sync())
 
     def test_error_is_reported(self):
@@ -115,4 +115,4 @@ class TestCalendlySync(TransactionCase):
                 raise CalendlyError("Calendly refused the token (401).")
         result = self.env["calendar.event"]._mrj_calendly_sync(client=Broken([], {}))
         self.assertIn("Failed: Calendly refused the token", result)
-        self.assertIn("Failed", self.env["ir.config_parameter"].sudo().get_str("mrj_calendly_sync.last_result"))
+        self.assertIn("Failed", self.env["ir.config_parameter"].sudo().get_param("mrj_calendly_sync.last_result"))

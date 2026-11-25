@@ -5,7 +5,7 @@
         <field name="model">res.config.settings</field>
         <field name="inherit_id" ref="website_sale.res_config_settings_view_form"/>
         <field name="arch" type="xml">
-            <block id="website_payment_block" position="inside">
+            <block id="sale_product_catalog_settings" position="inside">
                 <setting id="mrj_ask_ai_setting" string="Ask AI about this product"
                          help="A button on product pages that opens the shopper's own AI assistant with the product link and a question filled in.">
                     <div class="row mt-2">

@@ -2,7 +2,7 @@
     "name": "Ask AI About This Product",
     "summary": "A button on eCommerce product pages that opens the shopper's own AI assistant "
     "(ChatGPT, Perplexity, Claude, Gemini, Grok) with the product link and a buying question filled in.",
-    "version": "20.0.1.0.0",
+    "version": "18.0.1.0.0",
     "category": "Website/eCommerce",
     "author": "Muhammad Mairaj",
     "website": "https://thisismairaj.com",

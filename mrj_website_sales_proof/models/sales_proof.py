@@ -3,6 +3,8 @@ from datetime import timedelta
 
 from odoo import _, api, fields, models
 
+from ._mrj_compat import icp_bool, icp_int, icp_str
+
 P = "mrj_website_sales_proof."
 
 
@@ -16,13 +18,13 @@ class SalesProofView(models.Model):
     day = fields.Date(required=True, index=True)
     visitor_hash = fields.Char(required=True)
 
-    _mrj_unique_view = models.Constraint(
-        "UNIQUE(product_tmpl_id, day, visitor_hash)", "A visitor is counted once per product and day."
-    )
+    _sql_constraints = [
+        ("mrj_unique_view", "UNIQUE(product_tmpl_id, day, visitor_hash)", "A visitor is counted once per product and day."),
+    ]
 
     @api.model
     def _mrj_visitor_hash(self, ip, user_agent, day):
-        secret = self.env["ir.config_parameter"].sudo().get_str("database.secret")
+        secret = icp_str(self.env["ir.config_parameter"].sudo(), "database.secret")
         raw = "|".join([secret, ip or "", user_agent or "", str(day)])
         return hashlib.sha256(raw.encode()).hexdigest()[:32]
 
@@ -51,13 +53,13 @@ class Website(models.Model):
     def _mrj_sp_settings(self):
         icp = self.env["ir.config_parameter"].sudo()
         return {
-            "enabled": icp.get_bool(P + "enabled", True),
-            "min_orders": max(1, icp.get_int(P + "min_orders", 10)),
-            "days": max(1, icp.get_int(P + "days", 30)),
-            "show_city": icp.get_bool(P + "show_city", True),
-            "min_views": max(1, icp.get_int(P + "min_views", 5)),
-            "trust": [t.strip() for t in (icp.get_str(P + "trust") or "").splitlines() if t.strip()],
-            "max_cards": max(1, icp.get_int(P + "max_cards", 3)),
+            "enabled": icp_bool(icp, P + "enabled", True),
+            "min_orders": max(1, icp_int(icp, P + "min_orders", 10)),
+            "days": max(1, icp_int(icp, P + "days", 30)),
+            "show_city": icp_bool(icp, P + "show_city", True),
+            "min_views": max(1, icp_int(icp, P + "min_views", 5)),
+            "trust": [t.strip() for t in (icp_str(icp, P + "trust") or "").splitlines() if t.strip()],
+            "max_cards": max(1, icp_int(icp, P + "max_cards", 3)),
         }
 
     @staticmethod

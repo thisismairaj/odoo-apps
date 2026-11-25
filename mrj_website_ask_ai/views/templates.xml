@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <template id="product_ask_ai" inherit_id="website_sale.product" name="Ask AI About This Product">
-        <xpath expr="//div[@id='o_wsale_product_cta_section']" position="after">
+        <xpath expr="//div[@id='o_wsale_cta_wrapper']" position="after">
             <t t-set="mrj_ask" t-value="product._mrj_ask_ai_data(website)"/>
             <div t-if="mrj_ask" class="mrj-askai mb-4"
                  t-att-data-prompt="mrj_ask['prompt']"
