@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_calendar_event_form" model="ir.ui.view">
+        <field name="name">calendar.event.form.inherit.mrj.calendly</field>
+        <field name="model">calendar.event</field>
+        <field name="inherit_id" ref="calendar.view_calendar_event_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='location']" position="after">
+                <field name="mrj_calendly_uri" invisible="not mrj_calendly_uri"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

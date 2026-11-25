@@ -1,0 +1,64 @@
+<section class="oe_container">
+    <div class="oe_row oe_spaced">
+        <div class="oe_span12">
+            <h2 class="oe_slogan">Calendly Bookings to Calendar</h2>
+            <h3 class="oe_slogan">Every Calendly booking lands in your Odoo Calendar, with the invitee as a contact and the meeting link ready to join</h3>
+        </div>
+        <div class="oe_span12">
+            <div class="oe_demo oe_picture oe_screenshot">
+                <img src="screenshot_event.png" alt="A Calendly booking synced into an Odoo calendar event"/>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="oe_container oe_dark">
+    <div class="oe_row oe_spaced">
+        <div class="oe_span12">
+            <h2 class="oe_slogan">What it does</h2>
+        </div>
+        <div class="oe_span12">
+            <ul>
+                <li><b>New bookings</b> become calendar events: the event type and invitee name as the title, the right start and end time, and the owner you choose as organizer.</li>
+                <li><b>Invitees become contacts.</b> An existing contact with the same email is reused, so you don't get duplicates.</li>
+                <li><b>The meeting link</b> (Google Meet, Zoom, Teams) goes into Video Link, so Odoo's Join button works. Addresses and phone numbers go into Location.</li>
+                <li><b>Answers to your booking questions</b> are saved in the event's internal Notes.</li>
+                <li><b>Rescheduled</b> bookings move in Odoo too, and <b>cancelled</b> bookings are archived.</li>
+                <li><b>No emails from Odoo.</b> Calendly already emails your invitees, so Odoo stays quiet.</li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<section class="oe_container">
+    <div class="oe_row oe_spaced">
+        <div class="oe_span12">
+            <h2 class="oe_slogan">Setup in two minutes</h2>
+            <ol>
+                <li>In Calendly, open <b>Integrations &gt; API and webhooks</b> (or calendly.com/integrations/api_webhooks) and generate a personal access token.</li>
+                <li>In Odoo, open <b>Settings &gt; Calendar &gt; Calendly</b>, paste the token, pick the calendar owner, and click <b>Sync now</b>.</li>
+            </ol>
+            <p>After that, bookings sync every 30 minutes by themselves. The settings show the result of the last sync.</p>
+        </div>
+        <div class="oe_span12">
+            <div class="oe_demo oe_picture oe_screenshot">
+                <img src="screenshot_settings.png" alt="Calendly settings in Odoo"/>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="oe_container oe_dark">
+    <div class="oe_row oe_spaced">
+        <div class="oe_span12">
+            <h2 class="oe_slogan">Good to know</h2>
+            <ul>
+                <li><b>Works with Calendly's free plan.</b> It reads bookings through the Calendly API on a schedule, so it doesn't need webhooks, which Calendly only offers on paid plans.</li>
+                <li>It only reads from Calendly. It never changes or cancels anything there.</li>
+                <li>The token is stored in Odoo's system parameters and only administrators can see the setting.</li>
+                <li>Runs on Odoo.sh and self-hosted Odoo. Odoo Online does not allow third-party modules.</li>
+                <li>Calendly is a trademark of Calendly LLC. This module is not made by or affiliated with Calendly.</li>
+            </ul>
+        </div>
+    </div>
+</section>

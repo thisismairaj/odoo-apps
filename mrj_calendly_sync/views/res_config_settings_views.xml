@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_config_settings_view_form" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.mrj.calendly</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="calendar.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <setting id="sync_google_calendar_setting" position="after">
+                <setting id="mrj_calendly_setting" string="Calendly"
+                         help="Bring Calendly bookings into this calendar every 30 minutes. Works with Calendly's free plan.">
+                    <div class="row mt-2">
+                        <label for="mrj_calendly_token" class="col-lg-4 o_light_label"/>
+                        <field name="mrj_calendly_token" password="True" class="col-lg-8"
+                               placeholder="Calendly > Integrations > API and webhooks"/>
+                    </div>
+                    <div class="row mt-2">
+                        <label for="mrj_calendly_user_id" class="col-lg-4 o_light_label"/>
+                        <field name="mrj_calendly_user_id" class="col-lg-8" placeholder="Administrator"/>
+                    </div>
+                    <div class="row mt-2">
+                        <label for="mrj_calendly_days_back" class="col-lg-4 o_light_label"/>
+                        <field name="mrj_calendly_days_back" class="col-lg-8"/>
+                    </div>
+                    <div class="row mt-2">
+                        <label for="mrj_calendly_last_result" class="col-lg-4 o_light_label"/>
+                        <field name="mrj_calendly_last_result" class="col-lg-8" readonly="1"/>
+                    </div>
+                    <button name="action_mrj_calendly_sync_now" type="object" string="Sync now" class="btn-link mt-2" icon="fa-refresh"/>
+                </setting>
+            </setting>
+        </field>
+    </record>
+</odoo>
