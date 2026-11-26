@@ -1,0 +1,49 @@
+// Dark palette for the Odoo Community backend. This file is prepended to web.assets_web_dark,
+// so these values win over Odoo's `!default` light values. The grey scale is mirrored:
+// what was the lightest grey becomes the darkest surface, and the text colours become light.
+
+$mrj-dark-0: #16181d;   // deepest background
+$mrj-dark-1: #1c1f26;   // app background
+$mrj-dark-2: #232731;   // views, cards, dropdowns
+$mrj-dark-3: #2c313d;
+$mrj-dark-4: #3a4050;
+
+// Odoo variables
+$o-white: $mrj-dark-2;
+$o-black: #f2f4f7;
+$o-gray-100: $mrj-dark-1;
+$o-gray-200: $mrj-dark-3;
+$o-gray-300: $mrj-dark-4;
+$o-gray-400: #4f5668;
+$o-gray-500: #6b7385;
+$o-gray-600: #8e96a8;
+$o-gray-700: #b4bac7;
+$o-gray-800: #d5d9e1;
+$o-gray-900: #eceef2;
+$o-view-background-color: $mrj-dark-2;
+$o-webclient-background-color: $mrj-dark-1;
+$o-form-lightsecondary: $mrj-dark-4;
+$o-brand-secondary: #9aa1b0;
+
+// Bootstrap variables (pre_variables.scss)
+$white: $mrj-dark-2;
+$black: #f2f4f7;
+$gray-100: $mrj-dark-1;
+$gray-200: $mrj-dark-3;
+$gray-300: $mrj-dark-4;
+$gray-400: #4f5668;
+$gray-500: #6b7385;
+$gray-600: #8e96a8;
+$gray-700: #b4bac7;
+$gray-800: #d5d9e1;
+$gray-900: #eceef2;
+
+// Links and active elements: a lighter lilac reads on dark surfaces.
+$o-action: #a796dc;
+
+// Top bar: dark instead of the bright brand colour, with light entries.
+$o-navbar-background: $mrj-dark-0;
+$o-navbar-entry-color: rgba(#f2f4f7, .9);
+$o-navbar-entry-color--hover: #ffffff;
+$o-navbar-entry-bg--hover: rgba(#ffffff, .08);
+$o-main-link-color: #a796dc;
