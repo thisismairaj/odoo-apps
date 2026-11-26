@@ -1,8 +1,9 @@
 .mrj-askai { position: relative; }
 .mrj-askai-btn { display: inline-flex; align-items: center; gap: .45rem; padding: .5rem .95rem; border: 1px solid currentColor; border-radius: 999px; background: transparent; color: inherit; font: inherit; font-size: .9rem; cursor: pointer; }
 .mrj-askai-btn:hover, .mrj-askai-btn[aria-expanded="true"] { background: rgba(0, 0, 0, .05); }
-/* The menu opens in the page flow (not floating), because Odoo's product column clips overflowing content. */
-.mrj-askai-menu { position: static; margin-top: .4rem; max-width: 18rem; padding: .35rem; border: 1px solid rgba(0, 0, 0, .12); border-radius: .6rem; background: #fff; box-shadow: 0 8px 24px rgba(0, 0, 0, .12); }
+/* The menu floats (position: fixed, placed by ask_ai.js) so it never pushes the page down and is never clipped
+   by the product column or covered by the next section. */
+.mrj-askai-menu { position: fixed; z-index: 1055; width: max-content; min-width: 12rem; max-width: min(18rem, calc(100vw - 16px)); padding: .35rem; border: 1px solid rgba(0, 0, 0, .12); border-radius: .6rem; background: #fff; box-shadow: 0 8px 24px rgba(0, 0, 0, .12); }
 .mrj-askai-menu[hidden] { display: none; }
 .mrj-askai-item { display: block; width: 100%; padding: .55rem .7rem; border: 0; border-radius: .4rem; background: transparent; color: #222; font: inherit; font-size: .9rem; text-align: left; cursor: pointer; }
 .mrj-askai-item:hover, .mrj-askai-item:focus-visible { background: rgba(0, 0, 0, .06); }
