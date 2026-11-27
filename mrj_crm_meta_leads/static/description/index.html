@@ -1,0 +1,78 @@
+<section class="oe_container">
+    <div class="oe_row oe_spaced">
+        <div class="oe_span12">
+            <h2 class="oe_slogan">Facebook and Instagram Lead Ads to CRM</h2>
+            <h3 class="oe_slogan">Every lead from your Meta instant forms lands in Odoo CRM, with the campaign, ad set and ad it came from</h3>
+        </div>
+        <div class="oe_span12">
+            <div class="oe_demo oe_picture oe_screenshot">
+                <img src="main_screenshot.png" alt="A Meta Lead Ads lead in Odoo CRM with its campaign, ad set, ad and platform"/>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="oe_container oe_dark">
+    <div class="oe_row oe_spaced">
+        <div class="oe_span12">
+            <h2 class="oe_slogan">What it does</h2>
+        </div>
+        <div class="oe_span12">
+            <ul>
+                <li><b>New leads every 15 minutes</b>, plus an <b>Import leads now</b> button. This works without a public URL, so it also runs on a local or private Odoo.</li>
+                <li><b>Real time, if you want it:</b> point a Meta webhook at your Odoo and leads arrive within seconds. Every webhook call is checked against your app secret (X-Hub-Signature-256) before anything is read.</li>
+                <li><b>No duplicates.</b> Each Meta lead ID is imported once, even when the webhook and the scheduled import both see it.</li>
+                <li><b>Standard answers go into the right fields:</b> full name (or first and last name), email, phone, company, job title, street, city, zip, country and state.</li>
+                <li><b>Your own questions are kept</b> in the lead's Notes as a readable list.</li>
+                <li><b>Marketing fields filled in:</b> Campaign and Source (Facebook or Instagram), plus Medium (Social Media) on Odoo 20, so Odoo's CRM reports can group leads by campaign.</li>
+                <li><b>Per form settings:</b> sales team, salesperson, tags, and whether it creates a lead or an opportunity. Switch a form off to stop importing it.</li>
+            </ul>
+        </div>
+        <div class="oe_span12">
+            <div class="oe_demo oe_picture oe_screenshot">
+                <img src="screenshot_notes.png" alt="Answers to custom form questions saved in the lead's notes"/>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="oe_container">
+    <div class="oe_row oe_spaced">
+        <div class="oe_span12">
+            <h2 class="oe_slogan">Setup</h2>
+            <ol>
+                <li>At developers.facebook.com, create an app (Business type) and add the Facebook Page that runs your lead ads.</li>
+                <li>Create a long-lived <b>Page access token</b> for that Page with these permissions: leads_retrieval, pages_manage_ads, pages_show_list, pages_read_engagement and ads_management.</li>
+                <li>In Odoo, open <b>CRM &gt; Configuration &gt; Settings &gt; Facebook and Instagram Lead Ads</b>, paste the Page ID and the token, and click <b>Load forms from the Page</b>.</li>
+                <li>Open <b>CRM &gt; Configuration &gt; Meta Lead Forms</b> to choose the team, salesperson and tags for each form. Then click <b>Import leads now</b>, or wait for the next 15 minute run.</li>
+            </ol>
+            <p><b>Real time (optional):</b> in your Meta app, add a Page webhook with the URL shown in the settings, the same verify token, and the leadgen field, and paste the app secret into Odoo. Your Odoo must be reachable over HTTPS for this.</p>
+        </div>
+        <div class="oe_span12">
+            <div class="oe_demo oe_picture oe_screenshot">
+                <img src="screenshot_settings.png" alt="Lead Ads settings in Odoo CRM"/>
+            </div>
+        </div>
+        <div class="oe_span12">
+            <div class="oe_demo oe_picture oe_screenshot">
+                <img src="screenshot_forms.png" alt="The list of Meta lead forms with team, tags and lead count"/>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="oe_container oe_dark">
+    <div class="oe_row oe_spaced">
+        <div class="oe_span12">
+            <h2 class="oe_slogan">Good to know</h2>
+            <ul>
+                <li>It only reads from Meta. It never changes your forms, ads or Page.</li>
+                <li>The first import reaches back 30 days by default (you can change it). After that, each run asks only for leads newer than the last one imported.</li>
+                <li>The token and the app secret are visible to administrators only.</li>
+                <li>Meta access tokens can expire or be revoked. When that happens, the settings show the error from Meta and you paste a new token.</li>
+                <li>Depends only on CRM. Works on Odoo Community and Enterprise.</li>
+            </ul>
+            <p>Questions or a bug? Open an issue at <a href="https://github.com/thisismairaj/odoo-apps">github.com/thisismairaj/odoo-apps</a>.</p>
+        </div>
+    </div>
+</section>
