@@ -2,9 +2,9 @@
     "name": "Honest Sales Popup: Real Recent Orders",
     "summary": "A small social proof popup for your eCommerce shop that only shows the truth: real recent orders, "
     "real product views today and your own trust messages. No fake orders, ever.",
-    "version": "20.0.1.0.0",
+    "version": "20.0.1.0.1",
     "category": "Website/eCommerce",
-    "author": "Muhammad Mairaj",
+    "author": "Softstribe Ventures",
     "website": "https://thisismairaj.com",
     "license": "LGPL-3",
     "depends": ["website_sale"],
