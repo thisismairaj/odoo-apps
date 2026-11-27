@@ -2,9 +2,9 @@
     "name": "Facebook and Instagram Lead Ads to CRM",
     "summary": "Bring Meta Lead Ads (Facebook and Instagram instant forms) into Odoo CRM as leads, every 15 "
     "minutes or in real time by webhook. Per-form sales team, salesperson and tags. No duplicates.",
-    "version": "18.0.1.0.0",
+    "version": "18.0.1.0.1",
     "category": "Sales/CRM",
-    "author": "Muhammad Mairaj",
+    "author": "Softstribe Ventures",
     "website": "https://thisismairaj.com",
     "license": "LGPL-3",
     "depends": ["crm"],

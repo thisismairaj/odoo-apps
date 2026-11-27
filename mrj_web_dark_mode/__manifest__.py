@@ -2,9 +2,9 @@
     "name": "Dark Mode for Community",
     "summary": "A dark theme for the Odoo Community backend, switched on per user from the user menu. "
     "No configuration, no external files.",
-    "version": "18.0.1.0.0",
+    "version": "18.0.1.0.1",
     "category": "Productivity",
-    "author": "Muhammad Mairaj",
+    "author": "Softstribe Ventures",
     "website": "https://thisismairaj.com",
     "license": "LGPL-3",
     "depends": ["web"],

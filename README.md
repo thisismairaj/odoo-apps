@@ -1,4 +1,4 @@
-# Odoo apps by Muhammad Mairaj
+# Odoo apps by Softstribe Ventures
 
 Small Odoo modules, one folder per module. The branch name is the Odoo version (`18.0`, `19.0`, `20.0`).
 
