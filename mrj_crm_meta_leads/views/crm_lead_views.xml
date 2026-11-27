@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="crm_lead_view_form_mrj_meta" model="ir.ui.view">
+        <field name="name">crm.lead.form.mrj.meta</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_lead_view_form"/>
+        <field name="arch" type="xml">
+            <group name="categorization" position="after">
+                <group string="Meta Lead Ads" name="mrj_meta" invisible="not mrj_meta_lead_id">
+                    <field name="mrj_meta_form_id"/>
+                    <field name="mrj_meta_campaign"/>
+                    <field name="mrj_meta_adset"/>
+                    <field name="mrj_meta_ad"/>
+                    <field name="mrj_meta_platform"/>
+                    <field name="mrj_meta_organic"/>
+                    <field name="mrj_meta_lead_id"/>
+                </group>
+            </group>
+        </field>
+    </record>
+</odoo>
