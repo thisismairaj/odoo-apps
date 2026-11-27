@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="mrj_meta_lead_form_view_list" model="ir.ui.view">
+        <field name="name">mrj.meta.lead.form.list</field>
+        <field name="model">mrj.meta.lead.form</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="form_id"/>
+                <field name="status"/>
+                <field name="team_id"/>
+                <field name="user_id" widget="many2one_avatar_user"/>
+                <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
+                <field name="last_lead_time"/>
+                <field name="lead_count" string="Leads"/>
+                <field name="active" widget="boolean_toggle"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="mrj_meta_lead_form_view_form" model="ir.ui.view">
+        <field name="name">mrj.meta.lead.form.form</field>
+        <field name="model">mrj.meta.lead.form</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_leads" type="object" class="oe_stat_button" icon="fa-star">
+                            <field name="lead_count" widget="statinfo" string="Leads"/>
+                        </button>
+                    </div>
+                    <widget name="web_ribbon" title="Archived" bg_color="text-bg-danger" invisible="active"/>
+                    <div class="oe_title">
+                        <h1><field name="name" placeholder="Form name"/></h1>
+                    </div>
+                    <group>
+                        <group string="Meta">
+                            <field name="form_id"/>
+                            <field name="page_id"/>
+                            <field name="status"/>
+                            <field name="last_lead_time"/>
+                            <field name="active" invisible="1"/>
+                        </group>
+                        <group string="New leads get">
+                            <field name="lead_type" widget="radio"/>
+                            <field name="team_id"/>
+                            <field name="user_id" widget="many2one_avatar_user"/>
+                            <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="mrj_meta_lead_form_action" model="ir.actions.act_window">
+        <field name="name">Meta Lead Forms</field>
+        <field name="res_model">mrj.meta.lead.form</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">No Meta Lead Ads forms yet</p>
+            <p>Add your Page ID and Page access token in CRM, Settings, then click "Load forms from the Page".</p>
+        </field>
+    </record>
+
+    <menuitem id="mrj_meta_lead_form_menu" name="Meta Lead Forms" parent="crm.crm_menu_config"
+              action="mrj_meta_lead_form_action" sequence="30" groups="sales_team.group_sale_manager"/>
+</odoo>
