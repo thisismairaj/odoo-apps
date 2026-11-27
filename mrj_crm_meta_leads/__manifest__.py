@@ -5,7 +5,7 @@
     "version": "20.0.1.0.1",
     "category": "Sales/CRM",
     "author": "Softstribe Ventures",
-    "website": "https://thisismairaj.com",
+    "website": "https://softstribe.com",
     "license": "LGPL-3",
     "depends": ["crm"],
     "external_dependencies": {"python": ["requests"]},

@@ -5,7 +5,7 @@
     "version": "20.0.1.0.2",
     "category": "Productivity/Calendar",
     "author": "Softstribe Ventures",
-    "website": "https://thisismairaj.com",
+    "website": "https://softstribe.com",
     "license": "LGPL-3",
     "depends": ["calendar"],
     "external_dependencies": {"python": ["requests"]},

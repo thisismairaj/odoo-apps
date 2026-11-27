@@ -5,7 +5,7 @@
     "version": "20.0.1.0.1",
     "category": "Website/eCommerce",
     "author": "Softstribe Ventures",
-    "website": "https://thisismairaj.com",
+    "website": "https://softstribe.com",
     "license": "LGPL-3",
     "depends": ["website_sale"],
     "data": [
