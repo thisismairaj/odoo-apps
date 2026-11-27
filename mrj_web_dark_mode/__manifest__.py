@@ -5,7 +5,7 @@
     "version": "18.0.1.0.1",
     "category": "Productivity",
     "author": "Softstribe Ventures",
-    "website": "https://thisismairaj.com",
+    "website": "https://softstribe.com",
     "license": "LGPL-3",
     "depends": ["web"],
     "assets": {
